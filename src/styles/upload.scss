@@ -1,0 +1,68 @@
+.upload {
+    position: fixed;
+    width: 300px;
+    height: 30px;
+    right: 150px;
+    top: 15px;}
+
+.upload-button {
+    position: relative;
+    border: none;
+    right: 0;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    background-color: #6a9eff;
+    font-weight: bold;
+    border-radius: 8px;
+    transition-duration: 0.1s;
+}
+
+.upload-button:hover {
+    background-color: #8bb1f8;
+}
+
+.form {
+    position: relative;
+    border: 1px solid gray;
+    margin-top: 5px;
+    height: 50px;
+    padding: 30px 30px;
+    border-radius: 10px;
+    background-color: white;
+}
+
+.cancel-submit {
+    padding: 10px 10px;
+}
+
+.cancel-button {
+    padding: 5px 10px;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    color: black;
+    background-color: lightgray;
+    border-radius: 7px;
+    transition-duration: 0.1s;
+}
+
+.cancel-button:hover {
+    background-color: #acacac;
+}
+
+.submit-button {
+    padding: 5px 10px;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    background-color: #6a9eff;
+    border-radius: 7px;
+    transition-duration: 0.1s;
+}
+
+.submit-button:hover {
+    background-color: #8bb1f8;
+}
