@@ -1,15 +1,23 @@
 import React, { useState } from "react";
-import AWS from 'aws-sdk';
+import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 
 import "../styles/upload.scss";
 
-AWS.config.update({
-    accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
-    region: process.env.REACT_APP_AWS_REGION,
-});
+// AWS.config.update({
+//     accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+//     secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
+//     region: process.env.REACT_APP_AWS_REGION,
+// });
 
-const S3_BUCKET_NAME = "running-tracks/input";
+const S3_BUCKET_NAME = "running-tracks";
+
+const s3Client = new S3Client({
+    region: process.env.REACT_APP_AWS_REGION,
+    credentials: {
+        accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
+    },
+});
 
 
 const Upload = () => {
@@ -31,28 +39,23 @@ const Upload = () => {
         }
     }
 
-    const handleFormSubmit = async () => {
-        // Submit gpx files to s3 bucket
-        // Get files from event.target.files
-
-        const s3 = new AWS.S3({
-            params: { Bucket: S3_BUCKET_NAME },
-            region: process.env.REACT_APP_AWS_REGION,
-        });
-
+    const handleFormSubmit = async (event) => {
+        event.preventDefault();
         if (selectedFiles) {
             try {
-                const promises = Array.from(selectedFiles).map(file => {
+                const promises = Array.from(selectedFiles).map(async (file) => {
+                    console.log("Sending file " + file.name );
                     const params = {
                         Bucket: S3_BUCKET_NAME,
-                        Key: file.name,
+                        Key: "input/" + file.name,
                         Body: file,
                     };
-                    return s3.putObject(params).promise();
+                    await s3Client.send(new PutObjectCommand(params));
                 });
 
                 await Promise.all(promises);
                 console.log("Files uploaded successfully!");
+                setFormOpen(false);
             } catch (error) {
                 console.error("Error uploading files:", error);
             }
