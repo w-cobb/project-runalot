@@ -13,19 +13,6 @@ const Map = ({s3Client}) => {
     const bucket = "running-tracks";
     // let positions: [number, number][][] = [];
 
-    const multiPolyline: [number, number][][] = [
-        [
-          [47.529700000000005, -122.02489000000001],
-          [47.529700000000005, -122.02464],
-          [47.52975000000001, -122.02406],
-        ],
-        [
-          [51.5, -0.05],
-          [51.5, -0.06],
-          [51.52, -0.06],
-        ],
-      ];
-
     useEffect(() => {
         // Retrieve the keys for all GPX files in the S3 bucket
         listObjects();
@@ -38,7 +25,6 @@ const Map = ({s3Client}) => {
     useEffect(() => {
         setIsLoading(false);
         console.log(positions);
-        console.log(multiPolyline);
     }, [positions]);
 
     const listObjects = async () => {
